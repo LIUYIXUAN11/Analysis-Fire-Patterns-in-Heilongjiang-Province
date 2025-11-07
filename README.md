@@ -7,26 +7,32 @@
 ## 目录结构
 
 ```
-├── 1时间维度火灾格局分析/          # 时间维度分析相关文件
-│   ├── 2010-2019黑龙江省每周火点统计表.csv    # 按周统计的火点数据
-│   ├── 2010-2019黑龙江省每旬火点统计表.csv    # 按旬统计的火点数据
+├── 1时间维度火灾格局分析/                 # 时间维度分析相关文件
+│   ├── 2010-2019黑龙江省每周火点统计表.csv      # 按周统计的火点数据
+│   ├── 2010-2019黑龙江省每旬火点统计表.csv      # 按旬统计的火点数据
 │   ├── 2010-2019黑龙江省火灾异常高峰周统计表.csv  # 异常高峰周统计
-│   ├── 2010-2019黑龙江省火点高峰周统计表.csv    # 高峰周统计
+│   ├── 2010-2019黑龙江省火点高峰周统计表.csv      # 高峰周统计
 │   ├── Core question1-时间维度火灾格局分析.ipynb  # 时间维度分析主文件
-│   └── 火点季节曲线1.png/火点季节曲线2.png   # 季节性分析图表
-├── 2空间维度火灾格局分析/          # 空间维度分析相关文件
-│   ├── Core question1-空间维度火灾格局分析.ipynb  # 空间维度分析主文件
-│   ├── 多年平均火点热点图.png       # 空间热点分析图表
-│   └── 年均火点密度分布图.png       # 密度分布图表
-├── challenge3/                   # 挑战任务3
-│   ├── Q1.py                     # 秸秆焚烧高峰期特征分析
-│   ├── Q2.py                     # 第二部分挑战任务
-│   └── Q3.py                     # 第三部分挑战任务
-├── challenge4/                   # 挑战任务4
-│   └── Q3 and challenge 1 (1).ipynb  # 挑战任务分析文件
-├── challenge5/                   # 挑战任务5
-│   └── miniprogram2-3.ipynb      # 小程序分析文件
-└── assignment 1.docx             # 项目任务说明文档
+│   ├── 火点季节曲线1.png
+│   └── 火点季节曲线2.png
+├── cleaned data/                            # 清洗后的数据
+│   ├── cleaned_modis_hlj_2010-2019.csv
+│   ├── cleaned_modis_hlj_gdf.cpg/.dbf/.prj/.shp/.shx
+│   └── cleaned_straw_burning_data.xlsx
+├── challenge3/                              # 挑战任务3
+│   ├── Q1.py                                # 秸秆焚烧高峰期特征分析
+│   ├── Q2.py                                # 第二部分挑战任务
+│   └── Q3.py                                # 第三部分挑战任务
+├── question2/
+│   └── Question2.ipynb
+├── question3 and challenge 1 (1)/
+│   └── Question3 and challenge 1 (1).ipynb
+├── qusetion1/                               # 空间维度分析相关文件（文件夹名存在拼写）
+│   ├── Core question1-空间维度火灾格局分析.ipynb
+│   ├── 多年平均火点热点图.png
+│   └── 年均火点密度分布图.png
+├── README.md
+├── assignment 1.docx                        # 项目任务说明文档
 ```
 
 ## 主要功能模块
@@ -81,6 +87,14 @@
 - 高峰周和异常高峰周统计表
 - 空间分析用的GeoDataFrame数据
 
+### 数据文件说明与路径约定
+
+- 清洗后的CSV：`cleaned data/cleaned_modis_hlj_2010-2019.csv`
+- 空间数据（Shapefile 组成）：`cleaned data/cleaned_modis_hlj_gdf.shp` 及同名的 `.cpg/.dbf/.prj/.shx`
+- 秸秆焚烧专题数据：`cleaned data/cleaned_straw_burning_data.xlsx`
+
+请保持 Shapefile 相关文件（`.shp/.dbf/.shx/.prj/.cpg`）在同一目录，且同名以确保加载正常。
+
 ## 主要发现
 
 ### 时间维度发现
@@ -104,6 +118,12 @@
 pip install pandas numpy matplotlib seaborn geopandas
 ```
 
+如在 Windows 上安装 `geopandas` 相关依赖（GDAL/Fiona）遇到困难，建议使用 Conda：
+```bash
+conda install -c conda-forge geopandas
+```
+推荐使用 Python 3.10 及以上版本。
+
 ### 运行分析
 
 1. **时间维度分析**：
@@ -111,13 +131,20 @@ pip install pandas numpy matplotlib seaborn geopandas
    - 按照 notebook 中的步骤顺序运行代码
 
 2. **空间维度分析**：
-   - 打开`2空间维度火灾格局分析/Core question1-空间维度火灾格局分析.ipynb`
-   - 确保Shapefile数据路径正确
-   - 运行所有代码单元格
+   - 打开`qusetion1/Core question1-空间维度火灾格局分析.ipynb`
+   - 确保空间数据路径正确（例如：`cleaned data/cleaned_modis_hlj_gdf.shp`）
+   - 运行所有代码单元格，生成热点图与密度分布图
 
 3. **秸秆焚烧专题分析**：
    - 执行`challenge3/Q1.py`进行高峰期特征分析
-   - 类似地运行其他挑战任务文件
+   - 类似地运行`challenge3/Q2.py`、`challenge3/Q3.py`
+   - 通过命令行运行示例：
+     ```bash
+     python challenge3/Q1.py
+     ```
+
+4. **其他 Notebook**：
+   - 打开`question2/Question2.ipynb`、`question3 and challenge 1 (1)/Question3 and challenge 1 (1).ipynb`，按单元顺序执行
 
 ## 结果展示
 
@@ -129,6 +156,20 @@ pip install pandas numpy matplotlib seaborn geopandas
 - 年度变化趋势图：展示2010-2019年间的火灾变化
 - 月度分布图：显示火灾的月度分布特征
 - 时间分布热力图：多维度展示火灾的时空分布
+
+## 注意事项与常见问题
+
+- 坐标参考系（CRS）：请确保空间数据的坐标系一致（`.prj` 文件中定义），避免叠加偏移。
+- Shapefile 依赖：加载 `.shp` 时需同目录包含 `.dbf/.shx/.prj/.cpg` 文件。
+- GDAL/Fiona 安装：若 `pip install geopandas` 失败，优先使用 Conda 安装（见上文）。
+- 文件命名：当前空间分析目录名为 `qusetion1`（存在拼写），请在代码/文档中按现名使用；如需重命名请同时更新相关路径。
+
+## 重现性与环境
+
+- Python：建议 3.10+
+- 依赖：`pandas`、`numpy`、`matplotlib`、`seaborn`、`geopandas`
+- 数据版本：使用 `cleaned data` 目录下的清洗产物，确保与本 README 所述文件名一致。
+- 随机性：分析流程不涉及随机抽样，结果可按步骤稳定复现。
 
 ## 总结与展望
 
